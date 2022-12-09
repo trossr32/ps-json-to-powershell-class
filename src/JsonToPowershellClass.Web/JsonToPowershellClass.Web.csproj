@@ -1,0 +1,172 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Content\bootstrap-theme.css" />
+    <None Include="wwwroot\Content\bootstrap-theme.css.map" />
+    <None Include="wwwroot\Content\bootstrap-theme.min.css" />
+    <None Include="wwwroot\Content\bootstrap.css" />
+    <None Include="wwwroot\Content\bootstrap.css.map" />
+    <None Include="wwwroot\Content\bootstrap.min.css" />
+    <None Include="wwwroot\Content\Images\copy-32px-color.png" />
+    <None Include="wwwroot\Content\Images\copy-32px.png" />
+    <None Include="wwwroot\Content\JsonEditor\docs\api.md" />
+    <None Include="wwwroot\Content\JsonEditor\docs\usage.md" />
+    <None Include="wwwroot\Content\JsonEditor\examples\01_basic_usage.html" />
+    <None Include="wwwroot\Content\JsonEditor\examples\02_viewer.html" />
+    <None Include="wwwroot\Content\JsonEditor\examples\03_switch_mode.html" />
+    <None Include="wwwroot\Content\JsonEditor\examples\requirejs_demo\requirejs_demo.html" />
+    <None Include="wwwroot\Content\JsonEditor\examples\requirejs_demo\scripts\main.js" />
+    <None Include="wwwroot\Content\JsonEditor\examples\requirejs_demo\scripts\require.js" />
+    <None Include="wwwroot\Content\JsonEditor\HISTORY.md" />
+    <None Include="wwwroot\Content\JsonEditor\img\jsoneditor-icons.png" />
+    <None Include="wwwroot\Content\JsonEditor\jsoneditor-min.css" />
+    <None Include="wwwroot\Content\JsonEditor\jsoneditor-min.js" />
+    <None Include="wwwroot\Content\JsonEditor\jsoneditor.css" />
+    <None Include="wwwroot\Content\JsonEditor\jsoneditor.js" />
+    <None Include="wwwroot\Content\JsonEditor\lib\ace\ace.js" />
+    <None Include="wwwroot\Content\JsonEditor\lib\ace\ext-searchbox.js" />
+    <None Include="wwwroot\Content\JsonEditor\lib\ace\mode-json.js" />
+    <None Include="wwwroot\Content\JsonEditor\lib\ace\theme-jsoneditor.js" />
+    <None Include="wwwroot\Content\JsonEditor\lib\ace\theme-textmate.js" />
+    <None Include="wwwroot\Content\JsonEditor\lib\ace\worker-json.js" />
+    <None Include="wwwroot\Content\JsonEditor\lib\jsonlint\jsonlint.js" />
+    <None Include="wwwroot\Content\JsonEditor\lib\jsonlint\README.md" />
+    <None Include="wwwroot\Content\JsonEditor\LICENSE" />
+    <None Include="wwwroot\Content\JsonEditor\NOTICE" />
+    <None Include="wwwroot\Content\JsonEditor\README.md" />
+    <None Include="wwwroot\Content\prettify.css" />
+    <None Include="wwwroot\Content\Site.css" />
+    <None Include="wwwroot\Content\SunLight\CHANGELOG" />
+    <None Include="wwwroot\Content\SunLight\COPYING" />
+    <None Include="wwwroot\Content\SunLight\jquery.sunlight.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.6502asm-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.actionscript-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.bash-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.batch-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.brainfuck-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.cpp-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.csharp-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.css-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.diff-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.erlang-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.haskell-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.httpd-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.java-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.javascript-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.lisp-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.lua-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.mysql-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.nginx-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.objective-c-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.perl-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.php-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.powershell-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.python-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.ruby-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.scala-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.sln-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.tsql-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.vb-min.js" />
+    <None Include="wwwroot\Content\SunLight\lang\sunlight.xml-min.js" />
+    <None Include="wwwroot\Content\SunLight\plugins\sunlight-plugin.doclinks-min.js" />
+    <None Include="wwwroot\Content\SunLight\plugins\sunlight-plugin.linenumbers-min.js" />
+    <None Include="wwwroot\Content\SunLight\plugins\sunlight-plugin.menu-min.js" />
+    <None Include="wwwroot\Content\SunLight\README.md" />
+    <None Include="wwwroot\Content\SunLight\sunlight-all-min.js" />
+    <None Include="wwwroot\Content\SunLight\sunlight-min.js" />
+    <None Include="wwwroot\Content\SunLight\themes\sunlight.dark.css" />
+    <None Include="wwwroot\Content\SunLight\themes\sunlight.default.css" />
+    <None Include="wwwroot\Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <None Include="wwwroot\Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <None Include="wwwroot\Content\themes\base\jquery-ui.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.accordion.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.all.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.autocomplete.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.base.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.button.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.core.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.datepicker.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.dialog.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.progressbar.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.resizable.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.selectable.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.slider.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.tabs.css" />
+    <None Include="wwwroot\Content\themes\base\jquery.ui.theme.css" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <None Include="wwwroot\Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery-ui.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.button.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.core.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <None Include="wwwroot\Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="wwwroot\Scripts\bootstrap.js" />
+    <None Include="wwwroot\Scripts\bootstrap.min.js" />
+    <None Include="wwwroot\Scripts\jquery-1.9.1.intellisense.js" />
+    <None Include="wwwroot\Scripts\jquery-1.9.1.js" />
+    <None Include="wwwroot\Scripts\jquery-1.9.1.min.js" />
+    <None Include="wwwroot\Scripts\jquery-1.9.1.min.map" />
+    <None Include="wwwroot\Scripts\jquery-ui-1.8.24.js" />
+    <None Include="wwwroot\Scripts\jquery-ui-1.8.24.min.js" />
+    <None Include="wwwroot\Scripts\jquery.unobtrusive-ajax.js" />
+    <None Include="wwwroot\Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="wwwroot\Scripts\jquery.validate-vsdoc.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.min.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\Scripts\knockout-2.2.0.debug.js" />
+    <None Include="wwwroot\Scripts\knockout-2.2.0.js" />
+    <None Include="wwwroot\Scripts\modernizr-2.6.2.js" />
+    <None Include="wwwroot\Scripts\_references.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flurl.Http" Version="3.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JsonToPowershellClass\JsonToPowershellClass.Core.csproj" />
+  </ItemGroup>
+
+</Project>

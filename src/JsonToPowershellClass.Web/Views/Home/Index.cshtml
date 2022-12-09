@@ -1,0 +1,160 @@
+﻿@model JsonToPowershellClass.Web.ViewModels.IndexViewModel
+@{
+    ViewBag.Title = "Index";
+
+    const string codeEditorClass = "powershell";
+}
+
+@if (Model.Error)
+{
+    <div class="alert alert-dismissable alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        @switch (Model.ErrorNo)
+        {
+            case 1:
+                @:Class Name is Required
+                break;
+
+            case 2:
+                @:JSON or a valid URL is required
+                break;
+
+            case 3:
+                @:Invalid JSON Syntax
+                break;
+
+            case 4:
+                @:Invalid URL. Unable to download JSON data or URL is not valid JSON
+                break;
+        }
+    </div>
+}
+
+<link rel="stylesheet" type="text/css" href="/Content/jsoneditor/jsoneditor-min.css">
+
+<div class="row">
+    <div class="col-md-12">
+        <form class="form form-horizontal" action="/" method="post">
+
+        <h1 class="hide-h1">Generate Powershell classes from JSON</h1>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="control-group">
+                    <label class="control-label">Class Name</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.ClassName, new { placeholder = "Class Name", @class = "form-control" })                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="control-group">
+                    <label class="control-label"></label>
+                    <div class="col-md-12">
+                        <div class="check-inline">
+                            <label>
+                                @Html.CheckBox("Pascal", Model.Pascal)
+                                Pascal case
+                            </label>
+                            </div>
+                            <div class="check-inline">
+                                <label>
+                                    @Html.CheckBox("AddExampleFunctions", Model.AddExampleFunctions)
+                                    Add example Powershell usage functions
+                                </label>
+                            </div>
+                    </div>                    
+                </div>
+            </div>            
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">JSON Text or URL</label>
+            <div class="controls">
+                @Html.TextAreaFor(m => m.Json, new { @class = "form-control", rows = 10 })
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+
+        </form>
+    </div>
+</div>
+
+<div style="height: 20px"></div>
+
+<a name="result"></a>
+
+@if (!string.IsNullOrEmpty(Model.CodeObjects))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">JSON Utilities</h3>
+                    <span class="pull-right">
+                        <!-- Tabs -->
+                        <ul class="nav panel-tabs">
+                            <li class="active"><a href="#jsonobjects" data-toggle="tab">Class Objects</a></li>
+                            <li><a href="#jsoneditor" data-toggle="tab">Viewer</a></li>
+                        </ul>
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="jsonobjects">
+                            <pre class="sunlight-highlight-@codeEditorClass">@Html.Raw(Model.CodeObjects)</pre>
+                        </div>
+                        <div class="tab-pane" id="jsoneditor">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+    
+    <div id="json-text" style="display:none;">
+        @Model.Json
+    </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript" src="/Content/SunLight/sunlight-min.js"></script>
+    <script type="text/javascript" src="/Content/SunLight/sunlight-all-min.js"></script>
+
+    <script type="text/javascript" src="/Content/jsoneditor/jsoneditor-min.js"></script>
+
+    <script type="text/javascript">
+        
+        Sunlight.highlightAll();
+
+        var container = document.getElementById("jsoneditor");
+        var options = {
+            mode: 'tree'
+        };
+        var editor = new jsoneditor.JSONEditor(container, options);
+
+        var obj = JSON.parse($('#json-text').text());
+
+        editor.set(obj);
+
+        editor.expandAll();
+        
+        function resetAttributes() {
+            $('#ClassName').removeAttr('disabled');
+            $('#Pascal').removeAttr('disabled');
+            $("#div-properties").hide();
+        }
+        
+        $(document).ready(function() {
+            resetAttributes();
+        });
+
+    </script>
+}

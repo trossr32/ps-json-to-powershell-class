@@ -1,11 +1,11 @@
 # PsJsonToPowershellClass
 
-[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/ PsJsonToPowershellClass?label= PsJsonToPowershellClass&logo=powershell&style=plastic)](https://www.powershellgallery.com/packages/PsJsonToPowershellClass)
-[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PsJsonToPowershellClass?style=plastic)](https://www.powershellgallery.com/packages/PsJsonToPowershellClass)
+[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/JsonToPowershellClass?label=JsonToPowershellClass&logo=powershell&style=plastic)](https://www.powershellgallery.com/packages/JsonToPowershellClass)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/JsonToPowershellClass?style=plastic)](https://www.powershellgallery.com/packages/JsonToPowershellClass)
 
 A Powershell module that converts JSON to Powershell classes. JSON can be supplied as a string, a file that will be read or a URL that will be downloaded.
 
-Available in the [Powershell Gallery](https://www.powershellgallery.com/packages/PsJsonToPowershellClass)
+Available in the [Powershell Gallery](https://www.powershellgallery.com/packages/JsonToPowershellClass)
 
 ## Description
 Convert JSON to Powershell classes. JSON can be supplied as a string, a file that will be read or a URL that will be downloaded.
@@ -19,8 +19,8 @@ Optionally copy the output to clipboard.
 ## Installation (from the Powershell Gallery)
 
 ```powershell
-Install-Module  PsJsonToPowershellClass
-Import-Module  PsJsonToPowershellClass
+Install-Module  JsonToPowershellClass
+Import-Module  JsonToPowershellClass
 ```
 
 ## Included cmdlets
@@ -37,6 +37,12 @@ Convert-JsonToPowershellClass
 Convert-JsonToPowershellClass -JsonFile 'C:\Temp\a-json-file.json' -CopyToClipboard -IncludeExamples
 ```
 
+### Download JSON from a URL, convert to Powershell classes using 'TestyMcTestFace' as the root class, include usage examples, copy to clipboard and write a ps1 file to the file system
+
+```powershell
+Convert-JsonToPowershellClass -Url 'https://dummyjson.com/products' -IncludeExamples -CopyToClipboard -OutputFile 'C:\Users\rob\Downloads\sample_new3.ps1' -RootObjectClassName TestyMcTestyFace
+```
+
 ## Building the module and importing locally
 
 ### Build the .NET core solution
@@ -50,9 +56,9 @@ dotnet build [Github clone/download directory]\ps-json-to-powershell-class\src\P
 Remove any existing installation in this directory, create a new module directory and copy all the built files.
 
 ```powershell
-Remove-Item "C:\Users\[User]\Documents\PowerShell\Modules\PsJsonToPowershellClass" -Recurse -Force -ErrorAction SilentlyContinue
-New-Item -Path 'C:\Users\[User]\Documents\PowerShell\Modules\PsJsonToPowershellClass' -ItemType Directory
-Get-ChildItem -Path "[Github clone/download directory]\ps-json-to-powershell-class\src\PsJsonToPowershellClass\bin\Debug\net6.0\" | Copy-Item -Destination "C:\Users\[User]\Documents\PowerShell\Modules\PsJsonToPowershellClass" -Recurse
+Remove-Item "C:\Users\[User]\Documents\PowerShell\Modules\JsonToPowershellClass" -Recurse -Force -ErrorAction SilentlyContinue
+New-Item -Path 'C:\Users\[User]\Documents\PowerShell\Modules\JsonToPowershellClass' -ItemType Directory
+Get-ChildItem -Path "[Github clone/download directory]\ps-json-to-powershell-class\src\PsJsonToPowershellClass\bin\Debug\net6.0\" | Copy-Item -Destination "C:\Users\[User]\Documents\PowerShell\Modules\JsonToPowershellClass" -Recurse
 ```
 
 ## Contribute

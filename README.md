@@ -31,13 +31,13 @@ Convert-JsonToPowershellClass
 
 ## Examples
 
-### Convert a JSON file to Powershell classes including usage examples and copy the output to clipboard.
+#### Convert a JSON file to Powershell classes including usage examples and copy the output to clipboard.
 
 ```powershell
 Convert-JsonToPowershellClass -JsonFile 'C:\Temp\a-json-file.json' -CopyToClipboard -IncludeExamples
 ```
 
-### Download JSON from a URL, convert to Powershell classes using 'TestyMcTestFace' as the root class, include usage examples, copy to clipboard and write a ps1 file to the file system
+#### Download JSON from a URL, convert to Powershell classes using 'TestyMcTestFace' as the root class, include usage examples, copy to clipboard and write a ps1 file to the file system
 
 ```powershell
 Convert-JsonToPowershellClass -Url 'https://dummyjson.com/products' -IncludeExamples -CopyToClipboard -OutputFile 'C:\Users\rob\Downloads\sample_new3.ps1' -RootObjectClassName TestyMcTestyFace
@@ -45,13 +45,13 @@ Convert-JsonToPowershellClass -Url 'https://dummyjson.com/products' -IncludeExam
 
 ## Building the module and importing locally
 
-### Build the .NET core solution
+#### Build the .NET core solution
 
 ```powershell
 dotnet build [Github clone/download directory]\ps-json-to-powershell-class\src\PsJsonToPowershellClass\PsJsonToPowershellClass.csproj
 ```
 
-### Copy the built files to your Powershell modules directory
+#### Copy the built files to your Powershell modules directory
 
 Remove any existing installation in this directory, create a new module directory and copy all the built files.
 

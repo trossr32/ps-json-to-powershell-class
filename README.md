@@ -1,4 +1,4 @@
-# PsJsonToPowershellClass
+# JsonToPowershellClass
 
 [![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/JsonToPowershellClass?label=JsonToPowershellClass&logo=powershell&style=plastic)](https://www.powershellgallery.com/packages/JsonToPowershellClass)
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/JsonToPowershellClass?style=plastic)](https://www.powershellgallery.com/packages/JsonToPowershellClass)

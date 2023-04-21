@@ -54,6 +54,9 @@ module.exports = {
         },
 
         extend: {
+            inset: {
+                13: "3.25rem"
+            },
             spacing: {
                 13: "3.25rem",
                 15: "3.75rem",

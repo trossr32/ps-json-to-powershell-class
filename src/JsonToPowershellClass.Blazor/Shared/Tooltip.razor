@@ -1,0 +1,23 @@
+﻿@using JsonToPowershellClass.Blazor.Enums
+<div class="group relative inline-block hover:visible">
+    <span class="invisible group-hover:visible absolute w-32 bottom-full @PositionClass border border-black dark:border-none bg-white dark:bg-black text-center p-1.5 rounded-md z-50 dark:text-light-grey text-sm after:content[''] after:absolute after:top-full after:left-1/2 after:border-4 after:border-t-black after:border-x-transparent after:border-b-transparent">
+        @Text
+    </span>
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public string Text { get; set; }
+
+    [Parameter] public TooltipPosition Position { get; set; } = TooltipPosition.TopLeft;
+
+    private string PositionClass =>
+        Position switch
+        {
+            TooltipPosition.TopCenter => "-ml-16 after:-ml-1 top-1/2",
+            TooltipPosition.TopLeft => "-ml-28 after:ml-11",
+            TooltipPosition.TopRight => "-ml-6 after:-ml-11",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+}

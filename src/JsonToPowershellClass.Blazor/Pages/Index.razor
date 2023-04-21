@@ -1,0 +1,248 @@
+﻿@page "/"
+@using JsonToPowershellClass.Blazor.Models
+@using JsonToPowershellClass.Core.Services
+@using Flurl.Http
+@using JsonToPowershellClass.Blazor.Enums
+@using JsonToPowershellClass.Core.Enums
+@using JsonToPowershellClass.Core.Models
+@using Newtonsoft.Json
+@layout MainLayout
+@inject IJsonClassGeneratorService JsonClassGeneratorSvc
+@inject IJSRuntime JsRuntime
+
+<div id="main" class="relative">
+    <div>
+        @*<NavMenu></NavMenu>*@
+
+        <div class="lg:container lg:mx-auto flex flex-col items-center pt-4 pb-1">
+            <div class="w-full max-w-screen-2xl md:w-full">
+                <div class="w-full rounded-lg bg-light-grey/60 dark:bg-black/20 shadow-xl mb-10 items-center">
+                    <div class="py-4 text-center items-center">
+                        <div class="mx-auto w-fit">
+                            <div class="float-left">
+                                <img src="img/powershell.json.logo-1024x1024.png" class="w-9 sm:w-10 lg:w-12" alt="logo image"/>
+                            </div>
+                            <div class="float-left mt-1 ml-4">
+                                <h1 class="font-header text-xl sm:text-2xl lg:text-3xl font-medium text-dark-green dark:text-white">
+                                    Generate Powershell classes from JSON
+                                </h1>
+                            </div>
+                            <div class="clear-both"></div>
+                        </div>
+                    </div>
+
+                    <div class="py-1 md:pb-10 pt-4 pl-6 border-t-2 border-light-grey dark:border-dark-grey">
+                        <div class="md:flex">
+                            <div class="flex flex-col w-full md:w-1/2 md:pl-4 justify-center md:justify-start items-center md:items-start">
+                                <div>
+                                    <input type="text" @bind="formModel.ClassName" placeholder="Class Name"
+                                           class="w-80 block appearance-none md:max-w-xs py-1 px-2 mb-1 text-base leading-normal dark:bg-dark-grey text-gray-800 border-light-green/50 focus:border-light-green rounded"/>
+                                    <div class="justify-start">
+                                        <div>
+                                            <input type="checkbox" @bind="formModel.Pascal" name="pascal" id="pascal"
+                                                   class="bg-light-green text-light-green border-0 rounded-md focus:ring-0 focus:ring-light-grey mb-0.5"/>
+                                            <label for="pascal" class="ml-1">
+                                                Pascal case
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" @bind="formModel.AddExampleFunctions" name="add-example-functions" id="add-example-functions"
+                                                   class="bg-light-green text-light-green border-0 rounded-md focus:ring-0 focus:ring-light-grey mb-0.5"/>
+                                            <label for="add-example-functions" class="ml-1">
+                                                Add example Powershell usage functions
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col w-full md:w-1/2 md:pl-4 justify-center md:justify-start items-center md:items-start">
+                                <div class="mt-2 md:mt-0">
+                                    <input type="text" @bind="formModel.Url" placeholder="URL"
+                                           class="w-80 block appearance-none md:max-w-xs py-1 px-2 mb-1 text-base leading-normal dark:bg-dark-grey text-gray-800 border-light-green/50 focus:border-light-green rounded" />
+                                    <div class="py-2 w-full md:max-w-xs">
+                                        <button type="button" @onclick="@GenerateClassFromUrl"
+                                                class="font-bold rounded py-2 px-6 no-underline bg-light-green text-white transition ease-in-out delay-0 hover:scale-110 duration-300">
+                                            Generate class from URL
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:flex gap-x-0.5">
+                        <div class="w-full md:w-1/2">
+                            <CodeMirror6Wrapper @bind-Text="@formModel.Json" Language="json"/>
+                        </div>
+                        <div class="w-full md:w-1/2 relative">
+                            <CodeMirror6Wrapper @bind-Text="@codeObjects" Language="powershell"/>
+
+                            @if (!string.IsNullOrWhiteSpace(codeObjects))
+                            {
+                                <button type="button" @onclick="@CopyTextToClipboard">
+                                    <div class="absolute top-1.5 right-4 md:right-1.5 rounded-full bg-light-grey dark:bg-dark-grey bg-opacity-70 flex items-center justify-center h-10 w-10 dark:text-light-grey dark:hover:text-light-green border border-black dark:border-none shadow-xl ">
+                                        <Tooltip Text="Copy to clipboard">
+                                            <div class="p-2">
+                                                <span class="material-symbols-rounded leading-[inherit]">
+                                                    assignment_add
+                                                </span>
+                                            </div>
+                                        </Tooltip>
+                                    </div>
+                                </button>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="py-2 justify-center text-center">
+                        <div>
+                            <button type="button" @onclick="@HandleValidSubmit"
+                                    class="font-bold rounded py-2 px-6 no-underline bg-light-green text-white transition ease-in-out delay-0 hover:scale-110 duration-300">
+                                Generate class
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="w-full bg-light-grey/30 dark:bg-black/20 pb-12">
+            <div class="lg:container lg:mx-auto p-2">
+                <div class="max-w-5xl mx-auto">
+                    <h1 class="font-header text-xl font-medium text-dark-green dark:text-white text-center sm:text-2xl lg:text-3xl py-6">
+                        About
+                    </h1>
+                    
+                    <AboutItem AboutItemType="AboutItemType.Powershell"></AboutItem>
+                    
+                    <AboutItem AboutItemType="AboutItemType.Github"></AboutItem>
+                </div>
+            </div>
+        </div>
+
+        <Footer></Footer>
+    </div>
+</div>
+
+@code {
+
+    private InputFormModel formModel = new()
+    {
+        Json = @"{
+  ""id"": 69,
+  ""title"": ""The Hitchhiker's Guide to the Galaxy"",
+  ""author"": ""Megadodo Publications"",
+  ""description"": ""A wholly remarkable book"",
+  ""price"": 13.37,
+  ""stock"": 420,
+  ""category"": ""ebook"",
+  ""tags"": [
+      ""mostly harmless"",
+      ""ultimate question"",
+      ""ultimate answer""
+  ]
+}"
+    };
+
+    private string codeObjects = @"<#
+.SYNOPSIS
+    Online converter of JSON to Powershell classes.
+
+.DESCRIPTION
+    To convert a JSON object to a Powershell class, 
+    either paste JSON into the JSON code editor or
+    enter the URL of an API endpoint into the Url
+    text box and click the 'Generate class' button.
+
+.PARAMETER Url
+    Used to convert a JSON object returned from an 
+    API endpoint.
+
+.PARAMETER ClassName
+    By default, the parent class will be named
+    ""RootObject"". You can change this by entering
+    a new name in the text box.
+
+.PARAMETER PascalCase
+    If selected, the class name(s) will be converted 
+    to Pascal case.
+
+.PARAMETER AddExampleFunctions
+    If selected, example functions will be added to 
+    the generated code to show how to use the class.
+#>";
+
+    #region markup additional attributes
+
+    private Dictionary<string, object> formAttrs = new() {{ "class", "w-full max-w-screen-2xl md:w-full" }};
+    private Dictionary<string, object> inputTextAttrs = new()
+    {
+        { "class", "block appearance-none max-w-xs py-1 px-2 mb-1 text-base leading-normal bg-dark-grey text-gray-800 border border-gray-200 rounded" }
+    };
+
+    private Dictionary<string, object> classNameAttrs =>
+        new List<Dictionary<string, object>> { inputTextAttrs, new() { { "placeholder", "Class Name" } } }
+            .SelectMany(dict => dict)
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    private Dictionary<string, object> urlAttrs =>
+        new List<Dictionary<string, object>> { inputTextAttrs, new() { { "placeholder", "URL" } } }
+            .SelectMany(dict => dict)
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    #endregion
+
+    private async Task HandleValidSubmit()
+    {
+        if (string.IsNullOrWhiteSpace(formModel.ClassName))
+            formModel.ClassName = "RootObject";
+        
+        if (formModel.Json?.ToLower().StartsWith("http") ?? false)
+        {
+            try
+            {
+                formModel.Json = await formModel.Json.GetStringAsync();
+            }
+            catch (Exception){throw;}
+        }
+        
+        try
+        {
+            //codeObjects = new MarkupString(await JS.InvokeAsync<string>("highlight", WebUtility.HtmlEncode(Prepare())));
+            codeObjects = " ";
+            codeObjects = Prepare();
+        }
+        catch (Exception e){throw;}
+    }
+
+    private string Prepare() =>
+        string.IsNullOrWhiteSpace(formModel.Json)
+            ? " "
+            : JsonClassGeneratorSvc
+                .GenerateClasses(formModel.Json, new JsonSourceWrapper { Source = InputSource.FromString }, formModel.ClassName, formModel.Pascal, formModel.AddExampleFunctions);
+
+    private async Task GenerateClassFromUrl()
+    {
+        if (string.IsNullOrWhiteSpace(formModel.Url))
+            return;
+
+        try
+        {
+            formModel.Json = FormatJson(await formModel.Url.GetStringAsync());
+
+            await HandleValidSubmit();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    private async Task CopyTextToClipboard()
+    {
+        await JsRuntime.InvokeVoidAsync("clipboardCopy.copyText", codeObjects);
+    }
+
+    private static string FormatJson(string json) => 
+        JsonConvert.SerializeObject(JsonConvert.DeserializeObject(json), Formatting.Indented);
+}

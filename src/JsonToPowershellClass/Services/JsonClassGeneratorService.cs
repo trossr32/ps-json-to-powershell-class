@@ -26,11 +26,10 @@ public class JsonClassGeneratorService : IJsonClassGeneratorService
 {
     private const string RootObject = nameof(RootObject);
 
-    private string _json;
-    private readonly List<JsonType> _types = new();
-    private readonly List<string> _classNames = new();
-    private readonly StringBuilder _stringBuilder = new();
-    private readonly List<string> _writtenClasses = new();
+    private List<JsonType> _types = new();
+    private List<string> _classNames = new();
+    private StringBuilder _stringBuilder = new();
+    private List<string> _writtenClasses = new();
 
     /// <summary>
     /// Generate classes from the supplied json
@@ -44,8 +43,12 @@ public class JsonClassGeneratorService : IJsonClassGeneratorService
     /// <exception cref="Exception"></exception>
     public string GenerateClasses(string json, JsonSourceWrapper source, string rootObjectClassName, bool usePascalCase = false, bool addExampleFunctions = false)
     {
-        _json = json;
-
+        // initialise
+        _types = new List<JsonType>();
+        _classNames = new List<string>();
+        _stringBuilder = new StringBuilder();
+        _writtenClasses = new List<string>();
+        
         JObject[] objects;
 
         using (var reader = new StringReader(json))
@@ -222,7 +225,8 @@ public class JsonClassGeneratorService : IJsonClassGeneratorService
         _stringBuilder.AppendLine("");
         _stringBuilder.AppendLine("<#");
         _stringBuilder.AppendLine("    .SYNOPSIS");
-        _stringBuilder.AppendLine($"    Deserialize a supplied json string into an object of type [{rootClass}]");
+        _stringBuilder.AppendLine($"    Deserialize a supplied json string into an object of type [{rootClass}].");
+        _stringBuilder.AppendLine("    Response will be either an instance of the class or an array of the class, depending on the JSON input.");
         _stringBuilder.AppendLine("");
         _stringBuilder.AppendLine("    .DESCRIPTION");
         _stringBuilder.AppendLine("    Uses ConvertFrom-Json to deserialize a json string into a [pscustomobject] object graph.");
@@ -262,6 +266,19 @@ public class JsonClassGeneratorService : IJsonClassGeneratorService
         _stringBuilder.AppendLine("    Begin {}");
         _stringBuilder.AppendLine("");
         _stringBuilder.AppendLine("    Process {");
+        _stringBuilder.AppendLine("        $obj = ConvertFrom-Json $Json");
+        _stringBuilder.AppendLine("");
+        _stringBuilder.AppendLine("        if ($obj -is [array])");
+        _stringBuilder.AppendLine("        {");
+        _stringBuilder.AppendLine("            $outArr = @()");
+        _stringBuilder.AppendLine("");
+        _stringBuilder.AppendLine("            foreach ($o in $obj) {"); 
+        _stringBuilder.AppendLine($"                $outArr + ([{rootClass}] $o)");
+        _stringBuilder.AppendLine("            }");
+        _stringBuilder.AppendLine("");
+        _stringBuilder.AppendLine("            return $outArr");
+        _stringBuilder.AppendLine("        }");
+        _stringBuilder.AppendLine("");
         _stringBuilder.AppendLine($"        return [{rootClass}] (ConvertFrom-Json $Json)");
         _stringBuilder.AppendLine("    }");
         _stringBuilder.AppendLine("");

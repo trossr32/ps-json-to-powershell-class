@@ -1,0 +1,73 @@
+﻿@using JsonToPowershellClass.Blazor.Enums
+@inject IJSRuntime JSRuntime;
+
+<div class="w-full rounded-xl bg-white/60 dark:bg-dark-grey shadow-xl mb-10 md:flex">
+    <div class="md:flex-none rounded-t-xl md:rounded-tr-none md:rounded-l-xl justify-center items-center bg-light-green dark:bg-dark-green">
+        <img src="img/@(Image).png" @onclick="@Navigate"
+             class="p-6 md:p-10 w-48 h-48 mx-auto transition ease-in-out delay-0 hover:scale-110 duration-300 hover:cursor-pointer" />
+    </div>
+    <div class="md:flex-1 w-full p-10">
+        @switch (AboutItemType)
+        {
+            case AboutItemType.Powershell:
+                <text>
+                    <p class="font-body leading-relaxed dark:text-light-grey mb-4">
+                        This web application was originally conceived as a Powershell module which is available from the
+                        <a href="@Url" target="_blank" class="font-bold text-light-green hover:underline">
+                            Powershell Gallery
+                        </a>
+                    </p>
+                    <div class="flex gap-2">
+                        <img @onclick="@Navigate"
+                             class="transition ease-in-out delay-0 hover:scale-105 duration-300 hover:cursor-pointer"
+                             src="https://img.shields.io/powershellgallery/v/JsonToPowershellClass?label=JsonToPowershellClass&logo=powershell&style=plastic" />
+                        <img @onclick="@Navigate"
+                             class="transition ease-in-out delay-0 hover:scale-105 duration-300 hover:cursor-pointer"
+                             src="https://img.shields.io/powershellgallery/dt/JsonToPowershellClass?style=plastic" />
+                    </div>
+                </text>
+                break;
+
+            case AboutItemType.Github:
+                <text>
+                    <p class="font-body leading-relaxed dark:text-light-grey mb-4">
+                        Both the Powershell module and this web application share the same code, are open source and can be found on
+                        <a href="@Url" target="_blank" class="font-semibold text-light-green hover:underline">
+                            Github
+                        </a>
+                    </p>
+                    <div class="flex gap-2">
+                        <img @onclick="@Navigate"
+                             class="transition ease-in-out delay-0 hover:scale-105 duration-300 hover:cursor-pointer"
+                             src="https://img.shields.io/github/v/release/trossr32/ps-json-to-powershell-class?color=2fac46&label=ps-json-to-powershell-class&logo=github" />
+                    </div>
+                </text>
+                break;
+
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public AboutItemType AboutItemType { get; set; }
+
+    private string Url =>
+        AboutItemType switch
+        {
+            AboutItemType.Powershell => "https://www.powershellgallery.com/packages/JsonToPowershellClass",
+            AboutItemType.Github => "https://github.com/trossr32/ps-json-to-powershell-class",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+    private string Image =>
+        AboutItemType switch
+        {
+            AboutItemType.Powershell => "powershell-icon",
+            AboutItemType.Github => "github-icon",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+    private async Task Navigate() => await JSRuntime.InvokeVoidAsync("open", Url, "_blank");
+}

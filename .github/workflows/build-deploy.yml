@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+# Run workflow on every push to the master branch
+on:
+  push:
+    branches: [ main ]
+  
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '7.x.x'
+  NODE_VERSION: '16.x'
+  SOLUTION_PATH: 'src/JsonToPowershellClass.sln'
+  PROJECT_PATH: 'src/JsonToPowershellClass.Blazor/JsonToPowershellClass.Blazor.csproj'
+
+jobs:
+  deploy-to-github-pages:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        
+    - name: Publish
+      run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o public -p:GHPages=true -p:GHPagesBase="/"
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: public/wwwroot
+        force_orphan: true

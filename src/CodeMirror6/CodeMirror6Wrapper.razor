@@ -1,0 +1,131 @@
+﻿@implements IAsyncDisposable
+@inject IJSRuntime JsRuntime
+
+<div id="@Id"></div>
+
+@code {
+    /// <summary>
+    /// The id of the editor.
+    /// </summary>
+    [Parameter] public string Id { get; set; } = $"CodeMirror6_Editor_{Guid.NewGuid().ToString()}";
+
+    /// <summary>
+    /// The number of spaces a block (whatever that means in the edited language) should be indented. <br />
+    /// Defaults to 4.
+    /// </summary>
+    [Parameter] public int TabSize { get; set; } = 4;
+
+    /// <summary>
+    /// The text to be displayed in the editor.
+    /// </summary>
+    [Parameter] public string Text { get; set; }
+
+    /// <summary>
+    /// The language to be used in the editor.
+    /// </summary>
+    [Parameter] public string Language { get; set; }
+
+    /// <summary>
+    /// The event that is triggered when the text in the editor changes.
+    /// </summary>
+    [Parameter] public EventCallback<string> TextChanged { get; set; }
+
+    /// <summary>
+    /// The placeholder text to be displayed in the editor.
+    /// </summary>
+    [Parameter] public string PlaceholderText { get; set; }
+
+    /// <summary>
+    /// The event that is triggered when the focus of the editor changes.
+    /// </summary>
+    [Parameter] public EventCallback<bool> OnFocusChanged { get; set; }
+
+    private CodeMirrorJsInterop _jsInterop = null;
+    private bool _hasFocus;
+    private List<SelectionRange> _ranges = null;
+    private bool _shouldRender = true;
+    private string _prevText;
+    private int _prevTabSize;
+    
+    internal async Task DocChanged(string value)
+    {
+        if (Text?.Replace("\r", "") == value?.Replace("\r", "")) 
+            return;
+
+        Text = value?.Replace("\r", "");
+        _prevText = Text;
+        
+        await TextChanged.InvokeAsync(Text);
+    }
+
+    internal async Task FocusChanged(bool value)
+    {
+        if (_hasFocus == value) 
+            return;
+
+        _hasFocus = value;
+        await OnFocusChanged.InvokeAsync(_hasFocus);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    internal async Task SelectionSet(List<SelectionRange> value)
+    {
+        _ranges = value;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    /// <inheritdoc />
+    protected override void OnInitialized()
+    {
+        _prevTabSize = TabSize;
+        _prevText = Text;
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender || _jsInterop is not null)
+            return;
+
+        _jsInterop = new CodeMirrorJsInterop(JsRuntime, this);
+
+        await _jsInterop.InitCodeMirror();
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnParametersSetAsync()
+    {
+        _shouldRender = true;
+
+        if (_jsInterop is null) 
+            return;
+
+        _shouldRender = false;
+
+        if (_prevTabSize != TabSize) 
+        {
+            _prevTabSize = TabSize;
+            await _jsInterop.SetTabSize();
+            _shouldRender = true;
+        }
+
+        if (_prevText?.Replace("\r", "") != Text?.Replace("\r", "")) 
+        {
+            _prevText = Text;
+
+            await _jsInterop.SetText();
+            
+            _shouldRender = true;
+        }
+    }
+
+    /// <inheritdoc />
+    protected override bool ShouldRender() => _shouldRender;
+
+    /// <inheritdoc />
+    public async ValueTask DisposeAsync()
+    {
+        if (_jsInterop != null)
+            await _jsInterop.DisposeAsync();
+    }
+}

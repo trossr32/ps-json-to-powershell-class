@@ -1,0 +1,32 @@
+{
+  "name": "rob green engineering",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "scripts": {
+    "build": "cross-env NODE_ENV=development ./node_modules/tailwindcss/lib/cli.js -i ./Styles/app.css -o ./wwwroot/css/app.css",
+    "watch": "cross-env NODE_ENV=development ./node_modules/tailwindcss/lib/cli.js -i ./Styles/app.css -o ./wwwroot/css/app.css --watch",
+    "release": "cross-env NODE_ENV=production ./node_modules/tailwindcss/lib/cli.js -i ./Styles/app.css -o ./wwwroot/css/app.css --minify"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%"
+  ],
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.0",
+    "@tailwindcss/forms": "^0.4.0",
+    "@tailwindcss/typography": "^0.5.2",
+    "browser-sync": "^2.27.7",
+    "concurrently": "^7.0.0",
+    "cssnano": "^5.0.17",
+    "postcss-cli": "^9.1.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.2",
+    "postcss": "^8.4.7",
+    "prettier": "^2.5.1",
+    "prettier-plugin-tailwindcss": "^0.1.8",
+    "cross-env": "^7.0.3",
+    "tailwindcss": "^3.0.23"
+  }
+}

@@ -127,5 +127,7 @@
     {
         if (_jsInterop != null)
             await _jsInterop.DisposeAsync();
+
+        GC.SuppressFinalize(this);
     }
 }

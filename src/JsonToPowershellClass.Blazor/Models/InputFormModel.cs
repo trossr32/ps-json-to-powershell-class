@@ -1,11 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace JsonToPowershellClass.Blazor.Models;
+﻿namespace JsonToPowershellClass.Blazor.Models;
 
 public class InputFormModel
 {
-    [Required]
-    public string Json { get; set; }
+    public string Json { get; set; } = Constants.Constants.ExampleJson;
     public string Url { get; set; }
     public string ClassName { get; set; }
     public bool Pascal { get; set; }

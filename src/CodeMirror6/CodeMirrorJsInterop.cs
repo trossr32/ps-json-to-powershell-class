@@ -86,5 +86,7 @@ public class CodeMirrorJsInterop : IAsyncDisposable
         var module = await _moduleTask.Value; 
 
         await module.DisposeAsync();
+
+        GC.SuppressFinalize(this);
     }
 }

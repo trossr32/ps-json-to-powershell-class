@@ -1,4 +1,3 @@
-using Blazored.LocalStorage;
 using JsonToPowershellClass.Blazor;
 using JsonToPowershellClass.Blazor.Services;
 using JsonToPowershellClass.Core.Services;
@@ -15,9 +14,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddTransient<IJsonClassGeneratorService, JsonClassGeneratorService>();
 builder.Services.AddSingleton<BrowserService>();
-builder.Services.AddJsBlob();
 builder.Services.AddScoped<ToastService>();
-
-builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddJsBlob();
 
 await builder.Build().RunAsync();

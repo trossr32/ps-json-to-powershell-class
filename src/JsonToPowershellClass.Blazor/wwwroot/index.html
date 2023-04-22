@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <title>json2ps</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Generate Powershell classes from JSON online" />
@@ -10,7 +11,6 @@
     <meta name="robots" content="index,follow" />
     <meta name="googlebot" content="index,follow" />
     <meta name="copyright" content="Rob Green Engineering Ltd" />
-    <title>json2ps</title>
     <base href="/" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400&display=swap');
@@ -37,12 +37,23 @@
 </head>
 
 <body :class="{ 'overflow-hidden max-h-screen': mobileMenu }" class="relative bg-white text-black dark:bg-dark-grey dark:text-white" x-data="{ mobileMenu: false }">
+
     <div id="app">
-        <!--<svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>-->
+        <div class="absolute w-full h-full bg-light-grey/90 dark:bg-black/90 z-[1000]">
+            <div class="flex items-center justify-center min-h-screen p-5 min-w-screen">
+                <div class="flex space-x-6">
+                    <div class="loading-circle">
+                        <div class="loading-circle animate-ping"></div>
+                    </div>
+                    <div class="loading-circle">
+                        <div class="loading-circle animate-ping"></div>
+                    </div>
+                    <div class="loading-circle">
+                        <div class="loading-circle animate-ping"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="blazor-error-ui">
@@ -54,7 +65,7 @@
     <script src="scripts/clipboard.js"></script>
     <script src="scripts/upload-json-click.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8ee6b944e8094e0ea5025e1269add57e"}'></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "8ee6b944e8094e0ea5025e1269add57e"}'></script>
 </body>
 
 </html>

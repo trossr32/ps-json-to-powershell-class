@@ -14,17 +14,6 @@ module.exports = {
             ...defaultTheme.screens,
         },
 
-        animation: {
-            fadeIn: 'fadein 0.5s'
-        },
-
-        keyframes: {
-            fadein: {
-                'from': { opacity: 0 },
-                'to': { opacity: 1 }
-            }
-        },
-
         colors: {
             transparent: "transparent",
             primary: "#6aa84f",
@@ -60,10 +49,6 @@ module.exports = {
         shadows: {
             default: "0 2px 18px rgba(0, 0, 0, 0.06)",
             md: "0 -3px 36px rgba(0, 0, 0, 0.12)",
-        },
-
-        minHeight: {
-            '500px': '500px'
         },
 
         extend: {
@@ -123,6 +108,26 @@ module.exports = {
             },
             lineHeight: {
                 'inherit': 'inherit',
+            },
+
+            animation: {
+                fadeIn: 'fadein 0.5s',
+                ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+            },
+
+            keyframes: {
+                fadein: {
+                    'from': { opacity: 0 },
+                    'to': { opacity: 1 },
+                },
+                extend: {
+                    ping: {
+                        '75%, 100%': {
+                            transform: 'scale(2)',
+                            opacity: 0
+                        }
+                    }
+                }
             }
         },
     },

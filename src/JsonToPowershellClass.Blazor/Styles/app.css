@@ -10,21 +10,9 @@
     .transition-scale-hover-sm {
         @apply transition ease-in-out delay-0 hover:scale-105 duration-300;
     }
-}
 
-.cs-toast-visible {
-    display: flex;
-    flex-direction: row;
-    animation: fadein 1.5s;
-}
-
-@keyframes fadein {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
+    .loading-circle {
+        @apply w-3 h-3 bg-light-green rounded-full;
     }
 }
 
@@ -36,12 +24,10 @@
     outline: 1px solid red;
 }
 
-.validation-message {
-    color: red;
-}
-
 #blazor-error-ui {
-    background: lightyellow;
+    background: crimson;
+    border-radius: 0.25rem;
+    color: white;
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     display: none;
@@ -69,39 +55,6 @@
         content: "An error has occurred."
     }
 
-.loading-progress {
-    position: relative;
-    display: block;
-    width: 8rem;
-    height: 8rem;
-    margin: 20vh auto 1rem auto;
-}
-
-    .loading-progress circle {
-        fill: none;
-        stroke: #e0e0e0;
-        stroke-width: 0.6rem;
-        transform-origin: 50% 50%;
-        transform: rotate(-90deg);
-    }
-
-        .loading-progress circle:last-child {
-            stroke: #1b6ec2;
-            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
-            transition: stroke-dasharray 0.05s ease-in-out;
-        }
-
-.loading-progress-text {
-    position: absolute;
-    text-align: center;
-    font-weight: bold;
-    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
-}
-
-    .loading-progress-text:after {
-        content: var(--blazor-load-percentage-text, "Loading");
-    }
-
 .switch {
     position: relative;
     display: inline-block;
@@ -116,83 +69,8 @@
     height: 0;
 }
 
-/* The slider */
-.bxs-moon {
-    color: white;
-    position: absolute;
-    cursor: pointer;
-    top: 5px;
-    left: 5px;
-    right: 0;
-    bottom: 0;
-    z-index: 90;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-}
-
-/* The slider */
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255,255,255,0.3);
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-}
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 22px;
-        width: 22px;
-        left: 2px;
-        bottom: 2px;
-        background-color: #6aa84f;
-        -webkit-transition: 0.4s;
-        transition: 0.4s;
-    }
-
-input:checked + .slider {
-    background-color: #ffffff;
-}
-
-input:checked + .bxs-moon {
-    color: #333333;
-    /*position: absolute;
-    cursor: pointer;
-    top: 5px;
-    left: 5px;
-    right: 0;
-    bottom: 0;
-    z-index: 90;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;*/
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px #ffffff;
-}
-
-input:checked + .slider:before {
-    -webkit-transform: translateX(20px);
-    -ms-transform: translateX(20px);
-    transform: translateX(20px);
-}
-
 h1:focus {
     outline: none;
-}
-
-/* Rounded sliders */
-.slider.round {
-    border-radius: 26px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
 }
 
 /* CodeMirror */

@@ -1,6 +1,6 @@
-# JSON to Powershell class Blazor WASM app and Powershell module
+# JSON to Powershell class
 
-## [json2ps.app](https://json2ps.app/)
+## Blazor WASM app
 
 A net7.0 Blazor WebAssembly web application that converts JSON to Powershell classes. JSON can be supplied as a string, an uploaded file or a URL API endpoint.
 

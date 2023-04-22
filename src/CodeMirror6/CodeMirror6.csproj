@@ -29,6 +29,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
    <Target Name="NpmInit" BeforeTargets="BeforeBuild;BeforeRebuild;Rollup">
     <Exec Command="cd NodeLib &amp;&amp; npm install" />
   </Target>

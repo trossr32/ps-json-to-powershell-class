@@ -6,8 +6,6 @@ A net7.0 Blazor WebAssembly web application that converts JSON to Powershell cla
 
 Hosted with github pages at [json2ps.app](https://json2ps.app/)
 
-More information can be found in the [Wiki](https://github.com/trossr32/ps-json-to-powershell-class/wiki/Wep-app)
-
 ## Powershell module
 
 [![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/JsonToPowershellClass?label=JsonToPowershellClass&logo=powershell&style=plastic)](https://www.powershellgallery.com/packages/JsonToPowershellClass)
@@ -17,7 +15,11 @@ A Powershell module that converts JSON to Powershell classes. JSON can be suppli
 
 Available in the [Powershell Gallery](https://www.powershellgallery.com/packages/JsonToPowershellClass)
 
-More information can be found in the [Wiki](https://github.com/trossr32/ps-json-to-powershell-class/wiki/Powershell-module)
+## Wiki
+
+[Web app](https://github.com/trossr32/ps-json-to-powershell-class/wiki/Wep-app)
+
+[Powershell module](https://github.com/trossr32/ps-json-to-powershell-class/wiki/Powershell-module)
 
 ## Contribute
 

@@ -1,4 +1,4 @@
-﻿namespace JsonToPowershellClass.Blazor.Models;
+﻿namespace JsonToPowershellClass.Core.Models;
 
 public class InputFormModel
 {
@@ -7,7 +7,4 @@ public class InputFormModel
     public string ClassName { get; set; }
     public bool Pascal { get; set; }
     public bool AddExampleFunctions { get; set; } = true;
-
-    //public bool Error { get; set; }
-    //public int ErrorNo { get; set; }
 }

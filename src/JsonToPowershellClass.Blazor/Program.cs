@@ -16,9 +16,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddTransient<IJsonClassGeneratorService, JsonClassGeneratorService>();
 builder.Services.AddSingleton<BrowserService>();
 builder.Services.AddJsBlob();
+builder.Services.AddScoped<ToastService>();
 
 builder.Services.AddBlazoredLocalStorage();
 
-var app = builder.Build();
-
-await app.RunAsync();
+await builder.Build().RunAsync();

@@ -10,6 +10,14 @@ namespace JsonToPowershellClass.Core.Services;
 public interface IJsonClassGeneratorService
 {
     /// <summary>
+    /// Generate classes from the supplied input form model
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    string GenerateClasses(InputFormModel model);
+
+    /// <summary>
     /// Generate classes from the supplied json
     /// </summary>
     /// <param name="json"></param>
@@ -31,16 +39,11 @@ public class JsonClassGeneratorService : IJsonClassGeneratorService
     private StringBuilder _stringBuilder = new();
     private List<string> _writtenClasses = new();
 
-    /// <summary>
-    /// Generate classes from the supplied json
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="source">How the JSON was passed</param>
-    /// <param name="rootObjectClassName">Root class name. If null or whitespace then defaults to 'RootObject'</param>
-    /// <param name="usePascalCase">Whether to use pascal case for property names</param>
-    /// <param name="addExampleFunctions">whether to include example function output</param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    /// <inheritdoc/>
+    public string GenerateClasses(InputFormModel model) =>
+        GenerateClasses(model.Json, new JsonSourceWrapper { Source = InputSource.FromString }, model.ClassName, model.Pascal, model.AddExampleFunctions);
+
+    /// <inheritdoc/>
     public string GenerateClasses(string json, JsonSourceWrapper source, string rootObjectClassName, bool usePascalCase = false, bool addExampleFunctions = false)
     {
         // initialise

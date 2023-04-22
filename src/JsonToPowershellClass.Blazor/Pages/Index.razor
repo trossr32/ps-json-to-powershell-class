@@ -3,10 +3,14 @@
 @using System.Text
 @using SoloX.BlazorJsBlob
 @using System.Net.Http.Headers
+@using JsonToPowershellClass.Blazor.Services
+@using JsonToPowershellClass.Core.Constants
+@using Newtonsoft.Json.Linq
 @layout MainLayout
 @inject IJsonClassGeneratorService JsonClassGeneratorSvc
+@inject IBlobService BlobSvc
+@inject ToastService ToastSvc
 @inject IJSRuntime JsRuntime
-@inject IBlobService BlobService
 
 <div id="main" class="relative">
     <div>
@@ -31,18 +35,18 @@
                         <div class="md:flex">
                             <div class="flex flex-col w-full md:w-1/2 md:pl-4 justify-center md:justify-start items-center md:items-start">
                                 <div>
-                                    <input type="text" @bind="formModel.ClassName" placeholder="Class Name"
+                                    <input type="text" @bind="_model.ClassName" placeholder="Class Name"
                                            class="w-80 block appearance-none md:max-w-xs py-1 px-2 mb-1 text-base leading-normal dark:bg-dark-grey text-gray-800 border-light-green/50 focus:ring-light-green rounded"/>
                                     <div class="justify-start">
                                         <div>
-                                            <input type="checkbox" @bind="formModel.Pascal" name="pascal" id="pascal"
+                                            <input type="checkbox" @bind="_model.Pascal" name="pascal" id="pascal"
                                                    class="bg-light-green text-light-green border-0 rounded-md focus:ring-0 focus:ring-light-grey mb-0.5"/>
                                             <label for="pascal" class="ml-1">
                                                 Pascal case
                                             </label>
                                         </div>
                                         <div>
-                                            <input type="checkbox" @bind="formModel.AddExampleFunctions" name="add-example-functions" id="add-example-functions"
+                                            <input type="checkbox" @bind="_model.AddExampleFunctions" name="add-example-functions" id="add-example-functions"
                                                    class="bg-light-green text-light-green border-0 rounded-md focus:ring-0 focus:ring-light-grey mb-0.5"/>
                                             <label for="add-example-functions" class="ml-1">
                                                 Add example Powershell usage functions
@@ -53,10 +57,10 @@
                             </div>
                             <div class="flex flex-col w-full md:w-1/2 md:pl-4 justify-center md:justify-start items-center md:items-start">
                                 <div class="mt-2 md:mt-0">
-                                    <input type="text" @bind="formModel.Url" placeholder="URL"
+                                    <input type="text" @bind="_model.Url" placeholder="URL"
                                            class="w-80 block appearance-none md:max-w-xs py-1 px-2 mb-1 text-base leading-normal dark:bg-dark-grey text-gray-800 focus:ring-light-green focus:shadow-outline border-light-green/50 rounded" />
                                     <div class="py-2 w-full md:max-w-xs">
-                                        <button type="button" @onclick="@GenerateClassFromUrl"
+                                        <button type="button" @onclick="@GenerateClassFromUrlClick"
                                                 class="font-bold rounded py-2 px-6 no-underline bg-light-green text-white transition-scale-hover-sm">
                                             Generate class from URL
                                         </button>
@@ -68,9 +72,9 @@
 
                     <div class="md:flex gap-x-0.5">
                         <div class="w-full md:w-1/2 relative">
-                            <CodeMirror6Wrapper @bind-Text="@formModel.Json" Language="json"/>
+                            <CodeMirror6Wrapper @bind-Text="@_model.Json" Language="json"/>
                             
-                            <button type="button" @onclick="@OpenUploadDialog">
+                            <button type="button" @onclick="@InvokeClickInputFileEvent">
                                 <div class="absolute top-1.5 right-4 md:right-1.5 rounded-full bg-light-grey dark:bg-dark-grey bg-opacity-70 flex items-center justify-center h-10 w-10 dark:text-light-grey dark:hover:text-light-green border border-black dark:border-none shadow-xl transition-scale-hover-md">
                                     <Tooltip Text="Upload JSON file">
                                         <div class="p-2">
@@ -82,14 +86,14 @@
                                 </div>
                             </button>
 
-                            <InputFile id="UploadJSON" OnChange="@LoadFile" class="invisible"></InputFile>
+                            <InputFile id="UploadJSON" OnChange="@InputFileChanged" class="invisible" accept=".txt,.json"></InputFile>
                         </div>
                         <div class="w-full md:w-1/2 relative">
-                            <CodeMirror6Wrapper @bind-Text="@codeObjects" Language="powershell"/>
+                            <CodeMirror6Wrapper @bind-Text="@_codeObjects" Language="powershell"/>
 
-                            @if (!string.IsNullOrWhiteSpace(codeObjects))
+                            @if (!string.IsNullOrWhiteSpace(_codeObjects))
                             {
-                                <button type="button" @onclick="@DownloadPs1">
+                                <button type="button" @onclick="@DownloadPs1Click">
                                     <div class="absolute top-1.5 right-13 md:right-13 rounded-full bg-light-grey dark:bg-dark-grey bg-opacity-70 flex items-center justify-center h-10 w-10 dark:text-light-grey dark:hover:text-light-green border border-black dark:border-none shadow-xl transition-scale-hover-md">
                                         <Tooltip Text="Download as ps1">
                                             <div class="p-2">
@@ -101,7 +105,7 @@
                                     </div>
                                 </button>
 
-                                <button type="button" @onclick="@CopyTextToClipboard">
+                                <button type="button" @onclick="@CopyTextToClipboardClick">
                                     <div class="absolute top-1.5 right-4 md:right-1.5 rounded-full bg-light-grey dark:bg-dark-grey bg-opacity-70 flex items-center justify-center h-10 w-10 dark:text-light-grey dark:hover:text-light-green border border-black dark:border-none shadow-xl transition-scale-hover-md">
                                         <Tooltip Text="Copy to clipboard">
                                             <div class="p-2">
@@ -118,7 +122,7 @@
 
                     <div class="py-2 justify-center text-center">
                         <div>
-                            <button type="button" @onclick="@HandleValidSubmit"
+                            <button type="button" @onclick="@GenerateClassClick"
                                     class="font-bold rounded py-2 px-6 no-underline bg-light-green text-white transition-scale-hover-sm">
                                 Generate class
                             </button>
@@ -128,89 +132,113 @@
             </div>
         </div>
         
-        <div id="about" class="w-full bg-light-grey/30 dark:bg-black/20 pb-12">
-            <div class="lg:container lg:mx-auto p-2">
-                <div class="max-w-5xl mx-auto">
-                    <h1 class="font-header text-xl font-medium text-dark-green dark:text-white text-center sm:text-2xl lg:text-3xl py-6">
-                        About
-                    </h1>
-                    
-                    <AboutItem AboutItemType="AboutItemType.Powershell"></AboutItem>
-                    
-                    <AboutItem AboutItemType="AboutItemType.Github"></AboutItem>
-                </div>
-            </div>
-        </div>
+        <About></About>
 
         <Footer></Footer>
     </div>
 </div>
 
 @code {
-    private long maxFileSize = 1024 * 50;
+    private readonly InputFormModel _model = new();
+    private string _codeObjects = Constants.PowershellCommentAppDescription;
+    private string _tempJson;
 
-    private InputFormModel formModel = new()
+    /// <summary>
+    /// Generate class click event handler
+    /// </summary>
+    /// <returns></returns>
+    private void GenerateClassClick()
     {
-        Json = Constants.ExampleJson
-    };
-
-    private string codeObjects = Constants.PowershellCommentAppDescription;
-    
-    private async Task HandleValidSubmit()
-    {
-        if (string.IsNullOrWhiteSpace(formModel.ClassName))
-            formModel.ClassName = "RootObject";
+        if (string.IsNullOrWhiteSpace(_model.ClassName))
+            _model.ClassName = "RootObject";
 
         try
         {
-            formModel.Json = FormatJson(formModel.Json);
-            codeObjects = " ";
-            codeObjects = Prepare();
-        }
-        catch (Exception e){throw;}
-    }
+            _tempJson ??= _model.Json.Trim();
 
-    private string Prepare() =>
-        string.IsNullOrWhiteSpace(formModel.Json)
-            ? " "
-            : JsonClassGeneratorSvc
-                .GenerateClasses(formModel.Json, new JsonSourceWrapper { Source = InputSource.FromString }, formModel.ClassName, formModel.Pascal, formModel.AddExampleFunctions);
+            if (ValidateAndFormatJson())
+            {
+                _model.Json = _tempJson;
 
-    private async Task GenerateClassFromUrl()
-    {
-        if (string.IsNullOrWhiteSpace(formModel.Url))
-            return;
-
-        try
-        {
-            formModel.Json = FormatJson(await formModel.Url.GetStringAsync());
-
-            await HandleValidSubmit();
+                _codeObjects = " ";
+                _codeObjects = JsonClassGeneratorSvc.GenerateClasses(_model);
+            }
         }
         catch (Exception)
         {
-            throw;
+            ToastSvc.ShowError("Class generation failed");
         }
+
+        _tempJson = null;
     }
     
-    private async Task OpenUploadDialog() => await JsRuntime.InvokeVoidAsync("clickUploadJson");
-
-    private async Task LoadFile(InputFileChangeEventArgs e)
+    /// <summary>
+    /// Generate class from URL click event handler
+    /// </summary>
+    /// <returns></returns>
+    private async Task GenerateClassFromUrlClick()
     {
+        if (!_model.Url.IsValidUrl())
+        {
+            ToastSvc.ShowWarning("The supplied URL is not a valid format, please change and retry");
+
+            return;
+        }
 
         try
         {
-            var fileContent = new StreamContent(e.File.OpenReadStream(maxFileSize));
+            _tempJson = (await _model.Url.GetStringAsync()).Trim();
+
+            GenerateClassClick();
+        }
+        catch (FlurlHttpException fhe)
+        {
+            if (fhe is FlurlHttpTimeoutException)
+            {
+                ToastSvc.ShowError("Request to the supplied URL timed out");
+
+                return;
+            }
+
+            ToastSvc.ShowError("The supplied URL returns an invalid response", fhe.Message);
+        }
+        catch (Exception)
+        {
+            ToastSvc.ShowError("An unknown error occurred when retrieving or parsing the supplied API data");
+        }
+    }
+
+    /// <summary>
+    /// Fire the InputFileChanged on the hidden input file control
+    /// </summary>
+    /// <returns></returns>
+    private async Task InvokeClickInputFileEvent() => 
+        await JsRuntime.InvokeVoidAsync("clickUploadJson");
+
+    /// <summary>
+    /// Input file changed event handler (JSON file upload)
+    /// </summary>
+    /// <param name="e"></param>
+    /// <returns></returns>
+    private async Task InputFileChanged(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            var fileContent = new StreamContent(e.File.OpenReadStream(Constants.MaxFileSize));
 
             fileContent.Headers.ContentType = new MediaTypeHeaderValue(e.File.ContentType);
 
-            formModel.Json = FormatJson(await fileContent.ReadAsStringAsync());
+            _tempJson = (await fileContent.ReadAsStringAsync()).Trim();
 
-            await HandleValidSubmit();
+            GenerateClassClick();
         }
-        catch (Exception ex)
+        catch (IOException)
         {
-            throw;
+            ToastSvc.ShowWarning("File uploads are limited to 50 Mb, please reduce the file size and retry");
+        }
+        catch (Exception)
+        {
+            ToastSvc.ShowError("An unknown error occurred when uploading or reading the supplied file");
         }
     }
 
@@ -218,30 +246,81 @@
     /// Download powershell output as ps1 file
     /// </summary>
     /// <returns></returns>
-    private async Task DownloadPs1()
+    private async Task DownloadPs1Click()
     {
-        if (string.IsNullOrWhiteSpace(codeObjects))
+        if (string.IsNullOrWhiteSpace(_codeObjects.Trim()))
+        {
+            ToastSvc.ShowInfo("Nothing to copy! Generate some Powershell first");
+
             return;
+        }
 
-        var bytes = Encoding.UTF8.GetBytes(codeObjects);
-        var b64 = Convert.ToBase64String(bytes);
-        var dataUrl = $"data:text/plain;base64,{b64}";
+        try
+        {
+            var bytes = Encoding.UTF8.GetBytes(_codeObjects);
+            var b64 = Convert.ToBase64String(bytes);
+            var dataUrl = $"data:text/plain;base64,{b64}";
 
-        await BlobService.SaveAsFileAsync(dataUrl, $"json2ps.{DateTime.Now:yyyyMMdd.HHmmss}.ps1");
+            await BlobSvc.SaveAsFileAsync(dataUrl, $"json2ps.{DateTime.Now:yyyyMMdd.HHmmss}.ps1");
+        }
+        catch (Exception)
+        {
+            ToastSvc.ShowError("An unknown error occurred when generating the file for download");
+        }
     }
 
     /// <summary>
     /// Invoke javascript function to copy text to clipboard
     /// </summary>
     /// <returns></returns>
-    private async Task CopyTextToClipboard() => 
-        await JsRuntime.InvokeVoidAsync("clipboardCopy.copyText", codeObjects);
+    private async Task CopyTextToClipboardClick()
+    {
+        try
+        {
+            await JsRuntime.InvokeVoidAsync("clipboardCopy.copyText", _codeObjects);
+
+            ToastSvc.ShowSuccess("Copied to clipboard!");
+        }
+        catch (Exception)
+        {
+            ToastSvc.ShowError("An unknown error occurred when copying to clipboard");
+        }
+    }
 
     /// <summary>
-    /// Format inline json to indented json
+    /// Validate and format JSON
     /// </summary>
-    /// <param name="json"></param>
     /// <returns></returns>
-    private static string FormatJson(string json) => 
-        JsonConvert.SerializeObject(JsonConvert.DeserializeObject(json), Formatting.Indented);
+    private bool ValidateAndFormatJson()
+    {
+        try
+        {
+            JToken.Parse(_tempJson);
+        }
+        catch (JsonReaderException jre)
+        {
+            ToastSvc.ShowError("Invalid JSON detected, unable to convert", jre.Message);
+
+            return false;
+        }
+        catch (Exception)
+        {
+            ToastSvc.ShowError("An unknown error occurred when validating JSON");
+
+            return false;
+        }
+
+        try
+        {
+            _tempJson = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(_tempJson), new JsonSerializerSettings{ Formatting = Formatting.Indented });
+
+            return true;
+        }
+        catch (Exception)
+        {
+            ToastSvc.ShowError("Failed to format JSON, is it a valid format?");
+
+            return false;
+        }
+    }
 }

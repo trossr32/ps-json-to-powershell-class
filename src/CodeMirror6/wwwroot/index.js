@@ -24192,6 +24192,7 @@ var CmInstance = /** @class */ (function () {
     function CmInstance() {
         this.language = new Compartment;
         this.tabSize = new Compartment;
+        this.themeConfig = new Compartment;
     }
     return CmInstance;
 }());

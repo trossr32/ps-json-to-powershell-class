@@ -14,6 +14,17 @@ module.exports = {
             ...defaultTheme.screens,
         },
 
+        animation: {
+            fadeIn: 'fadein 0.5s'
+        },
+
+        keyframes: {
+            fadein: {
+                'from': { opacity: 0 },
+                'to': { opacity: 1 }
+            }
+        },
+
         colors: {
             transparent: "transparent",
             primary: "#6aa84f",
@@ -26,6 +37,8 @@ module.exports = {
             "dark-green": "#262f20",
             "light-grey": "#e1e1e1",
             "dark-grey": "#1e1e1e",
+            "error": "crimson",
+            "warning": "darkorange",
             "grey-10": "#6c6b6d",
             "grey-20": "#7c7c7c",
             "grey-30": "#919091",

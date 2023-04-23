@@ -1,0 +1,49 @@
+﻿@using JsonToPowershellClass.Blazor.Services
+@inject LoaderService LoaderSvc
+
+<div class="absolute w-full h-full bg-light-grey/90 dark:bg-black/90 z-[1000] @Display">
+    <div class="flex items-center justify-center min-h-screen p-5 min-w-screen">
+        <div class="flex space-x-6">
+            <div class="loading-circle">
+                <div class="loading-circle animate-ping"></div>
+            </div>
+            <div class="loading-circle">
+                <div class="loading-circle animate-ping"></div>
+            </div>
+            <div class="loading-circle">
+                <div class="loading-circle animate-ping"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool _isVisible;
+    private string Display => _isVisible ? "block" : "hidden";
+
+    protected override void OnInitialized()
+    {
+        LoaderSvc.OnShow += ShowLoader;
+        LoaderSvc.OnHide += HideLoader;
+    }
+
+    private void ShowLoader()
+    {
+        _isVisible = true;
+
+        StateHasChanged();
+    }
+
+    private void HideLoader()
+    {
+        _isVisible = false;
+
+        StateHasChanged();
+    }
+    
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
+    }
+}

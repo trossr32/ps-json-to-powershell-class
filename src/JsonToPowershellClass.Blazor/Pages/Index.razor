@@ -10,6 +10,7 @@
 @inject IJsonClassGeneratorService JsonClassGeneratorSvc
 @inject IBlobService BlobSvc
 @inject ToastService ToastSvc
+@inject LoaderService LoaderSvc
 @inject IJSRuntime JsRuntime
 
 <div id="main" class="relative">
@@ -142,6 +143,22 @@
     private readonly InputFormModel _model = new();
     private string _codeObjects = Constants.PowershellCommentAppDescription;
     private string _tempJson;
+
+    protected override async Task OnInitializedAsync()
+    {
+        LoaderSvc.ShowLoader();
+
+        await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        await Task.Delay(1);
+
+        LoaderSvc.HideLoader();
+    }
 
     /// <summary>
     /// Generate class click event handler

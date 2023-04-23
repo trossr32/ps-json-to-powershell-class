@@ -15,6 +15,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddTransient<IJsonClassGeneratorService, JsonClassGeneratorService>();
 builder.Services.AddSingleton<BrowserService>();
 builder.Services.AddScoped<ToastService>();
+builder.Services.AddScoped<LoaderService>();
 builder.Services.AddJsBlob();
 
 await builder.Build().RunAsync();

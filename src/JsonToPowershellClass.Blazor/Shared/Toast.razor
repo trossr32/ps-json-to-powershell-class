@@ -1,5 +1,5 @@
 ﻿@using JsonToPowershellClass.Blazor.Services
-@inject ToastService ToastService
+@inject ToastService ToastSvc
 @implements IDisposable
 
 <div class="absolute w-full h-full bg-light-grey/40 dark:bg-black/30 z-[998] @Display" @onclick="HideToast">
@@ -36,8 +36,8 @@
 
     protected override void OnInitialized()
     {
-        ToastService.OnShow += ShowToast;
-        ToastService.OnHide += HideToast;
+        ToastSvc.OnShow += ShowToast;
+        ToastSvc.OnHide += HideToast;
     }
 
     private void ShowToast(string message, string detail, ToastLevel level)
@@ -83,8 +83,8 @@
     /// <inheritdoc/>
     public void Dispose()
     {
-        ToastService.OnShow -= ShowToast;
-        ToastService.OnHide -= HideToast;
+        ToastSvc.OnShow -= ShowToast;
+        ToastSvc.OnHide -= HideToast;
 
         GC.SuppressFinalize(this);
     }

@@ -2,7 +2,7 @@
 
 public static class Constants
 {
-    public const long MaxFileSize = 1024 * 50;
+    public const long MaxFileSize = 1024 * 1024 * 50;
 
     public const string ExampleJson = @"{
   ""id"": 69,

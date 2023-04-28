@@ -12,7 +12,7 @@
     RootModule           = 'JsonToPowershellClass.dll'
 
     # Version number of this module.
-    ModuleVersion        = '1.0.1'
+    ModuleVersion        = '1.1.0'
 
     # Supported PSEditions
     CompatiblePSEditions = 'Core'
@@ -27,7 +27,7 @@
     CompanyName          = 'Rob Green Engineering Ltd'
 
     # Copyright statement for this module
-    Copyright            = '(c) 2022 Rob Green. All rights reserved.'
+    Copyright            = '(c) 2023 Rob Green Engineering Ltd. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description          = 'A Powershell module that converts JSON to Powershell classes. JSON can be supplied as a string, a file that will be read or a URL that will be downloaded.'
@@ -97,7 +97,7 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags       = 'json-converter', 'powershell-class', 'class', 'deserialize', 'json'
+            Tags       = 'json-converter', 'powershell-class', 'class', 'deserialize', 'json', 'json2ps'
 
             # A URL to the license for this module.
             LicenseUri = 'https://github.com/trossr32/ps-json-to-powershell-class/blob/master/LICENSE'

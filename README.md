@@ -17,7 +17,7 @@ Available in the [Powershell Gallery](https://www.powershellgallery.com/packages
 
 ## Wiki
 
-[Web app](https://github.com/trossr32/ps-json-to-powershell-class/wiki/Wep-app)
+[Web app](https://github.com/trossr32/ps-json-to-powershell-class/wiki/Web-app)
 
 [Powershell module](https://github.com/trossr32/ps-json-to-powershell-class/wiki/Powershell-module)
 

@@ -1,32 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<nullable>disable</nullable>
-		<AssemblyName>JsonToPowershellClass</AssemblyName>
-		<RootNamespace>PsJsonToPowershellClass</RootNamespace>
-		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-		<AssemblyVersion>1.0.1.0</AssemblyVersion>
-		<Version>1.0.1</Version>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Flurl.Http" Version="3.2.4" />
-		<PackageReference Include="PowerShellStandard.Library" Version="7.0.0-preview.1" />
-		<PackageReference Include="TextCopy" Version="6.2.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\JsonToPowershellClass\JsonToPowershellClass.Core.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Update="JsonToPowershellClass.dll-Help.xml">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="JsonToPowershellClass.psd1">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <nullable>disable</nullable>
+    <AssemblyName>JsonToPowershellClass</AssemblyName>
+    <RootNamespace>PsJsonToPowershellClass</RootNamespace>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Flurl.Http" Version="4.0.0" />
+    <PackageReference Include="PowerShellStandard.Library" Version="7.0.0-preview.1" />
+    <PackageReference Include="TextCopy" Version="6.2.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JsonToPowershellClass\JsonToPowershellClass.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="JsonToPowershellClass.dll-Help.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="JsonToPowershellClass.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

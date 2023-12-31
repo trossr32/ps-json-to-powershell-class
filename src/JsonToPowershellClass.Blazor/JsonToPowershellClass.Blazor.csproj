@@ -1,47 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
-
-	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
-		<Nullable>disable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<NpmLastInstall>node_modules/.last-install</NpmLastInstall>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Flurl.Http" Version="3.2.4" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.5" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="7.0.5" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.5" PrivateAssets="all" />
-		<PackageReference Include="PublishSPAforGitHubPages.Build" Version="2.0.2" />
-		<PackageReference Include="SoloX.BlazorJsBlob" Version="1.0.2" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\CodeMirror6\CodeMirror6.csproj" />
-	  <ProjectReference Include="..\JsonToPowershellClass\JsonToPowershellClass.Core.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Update="wwwroot\img\powershell.json.logo-1024x1024.png">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	</ItemGroup>
-
-	<Target Name="CheckForNpm" BeforeTargets="NpmInstall">
-		<Exec Command="npm -v" ContinueOnError="true">
-			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-		</Exec>
-		<Error Condition="'$(ErrorCode)' != '0'" Text="You must install NPM to build this project" />
-	</Target>
-
-	<Target Name="NpmInstall" BeforeTargets="BuildCSS" Inputs="package.json" Outputs="$(NpmLastInstall)">
-		<Exec Command="npm install" />
-		<Touch Files="$(NpmLastInstall)" AlwaysCreate="true" />
-	</Target>
-
-	<Target Name="BuildCSS" BeforeTargets="Compile">
-		<Exec Command="npm run build" Condition=" '$(Configuration)' == 'Debug' " />
-		<Exec Command="npm run release" Condition=" '$(Configuration)' == 'Release' " />
-	</Target>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <NpmLastInstall>node_modules/.last-install</NpmLastInstall>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Flurl.Http" Version="4.0.0" />
+    <PackageReference Include="PublishSPAforGitHubPages.Build" Version="2.1.1" />
+    <PackageReference Include="SoloX.BlazorJsBlob" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeMirror6\CodeMirror6.csproj" />
+    <ProjectReference Include="..\JsonToPowershellClass\JsonToPowershellClass.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="wwwroot\img\powershell.json.logo-1024x1024.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <Target Name="CheckForNpm" BeforeTargets="NpmInstall">
+    <Exec Command="npm -v" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="You must install NPM to build this project" />
+  </Target>
+  <Target Name="NpmInstall" BeforeTargets="BuildCSS" Inputs="package.json" Outputs="$(NpmLastInstall)">
+    <Exec Command="npm install" />
+    <Touch Files="$(NpmLastInstall)" AlwaysCreate="true" />
+  </Target>
+  <Target Name="BuildCSS" BeforeTargets="Compile">
+    <Exec Command="npm run build" Condition=" '$(Configuration)' == 'Debug' " />
+    <Exec Command="npm run release" Condition=" '$(Configuration)' == 'Release' " />
+  </Target>
 </Project>

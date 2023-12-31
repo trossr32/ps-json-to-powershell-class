@@ -4,7 +4,7 @@ namespace JsonToPowershellClass.Blazor.Extensions;
 
 public static partial class UrlExtensions
 {
-    [GeneratedRegex("^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
+    [GeneratedRegex(@"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
     private static partial Regex UrlRegex();
 
     /// <summary>

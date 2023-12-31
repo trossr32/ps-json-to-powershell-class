@@ -34,10 +34,10 @@ public class JsonClassGeneratorService : IJsonClassGeneratorService
 {
     private const string RootObject = nameof(RootObject);
 
-    private List<JsonType> _types = new();
-    private List<string> _classNames = new();
+    private List<JsonType> _types = [];
+    private List<string> _classNames = [];
     private StringBuilder _stringBuilder = new();
-    private List<string> _writtenClasses = new();
+    private List<string> _writtenClasses = [];
 
     /// <inheritdoc/>
     public string GenerateClasses(InputFormModel model) =>
@@ -47,10 +47,10 @@ public class JsonClassGeneratorService : IJsonClassGeneratorService
     public string GenerateClasses(string json, JsonSourceWrapper source, string rootObjectClassName, bool usePascalCase = false, bool addExampleFunctions = false)
     {
         // initialise
-        _types = new List<JsonType>();
-        _classNames = new List<string>();
+        _types = [];
+        _classNames = [];
         _stringBuilder = new StringBuilder();
-        _writtenClasses = new List<string>();
+        _writtenClasses = [];
         
         JObject[] objects;
 

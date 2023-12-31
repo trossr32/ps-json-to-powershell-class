@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOTNET_VERSION: '7.x.x'
+  DOTNET_VERSION: '8.x.x'
   NODE_VERSION: '16.x'
   SOLUTION_PATH: 'src/JsonToPowershellClass.sln'
   PROJECT_PATH: 'src/JsonToPowershellClass.Blazor/JsonToPowershellClass.Blazor.csproj'

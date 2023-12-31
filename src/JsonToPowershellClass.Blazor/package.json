@@ -14,19 +14,19 @@
   ],
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@tailwindcss/forms": "^0.5.3",
-    "@tailwindcss/typography": "^0.5.9",
-    "browser-sync": "^2.27.7",
-    "concurrently": "^7.0.0",
-    "cssnano": "^5.0.17",
-    "postcss-cli": "^9.1.0"
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
+    "browser-sync": "^3.0.2",
+    "concurrently": "^8.2.2",
+    "cssnano": "^6.0.2",
+    "postcss-cli": "^11.0.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.7",
-    "prettier": "^2.5.1",
-    "prettier-plugin-tailwindcss": "^0.1.8",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.1",
+    "prettier-plugin-tailwindcss": "^0.5.10",
     "cross-env": "^7.0.3",
-    "tailwindcss": "^3.3.1"
+    "tailwindcss": "^3.4.0"
   }
 }

@@ -2,7 +2,9 @@
 
 ## Blazor WASM app
 
-A net7.0 Blazor WebAssembly web application that converts JSON to Powershell classes. JSON can be supplied as a string, an uploaded file or a URL API endpoint.
+<a href="https://json2ps.app">![Static Badge](https://img.shields.io/badge/json2ps.app-8A2BE2?style=flat&logo=microsoftedge&link=https%3A%2F%2Fjson2ps.app)</a>
+
+A net8.0 Blazor WebAssembly web application that converts JSON to Powershell classes. JSON can be supplied as a string, an uploaded file or a URL API endpoint.
 
 Hosted with github pages at [json2ps.app](https://json2ps.app/)
 
@@ -17,7 +19,7 @@ Available in the [Powershell Gallery](https://www.powershellgallery.com/packages
 
 ## Wiki
 
-[Web app](https://github.com/trossr32/ps-json-to-powershell-class/wiki/Wep-app)
+[Web app](https://github.com/trossr32/ps-json-to-powershell-class/wiki/Web-app)
 
 [Powershell module](https://github.com/trossr32/ps-json-to-powershell-class/wiki/Powershell-module)
 

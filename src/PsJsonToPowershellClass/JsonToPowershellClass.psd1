@@ -27,7 +27,7 @@
     CompanyName          = 'Rob Green Engineering Ltd'
 
     # Copyright statement for this module
-    Copyright            = '(c) 2023 Rob Green Engineering Ltd. All rights reserved.'
+    Copyright            = '(c) 2024 Rob Green Engineering Ltd. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description          = 'A Powershell module that converts JSON to Powershell classes. JSON can be supplied as a string, a file that will be read or a URL that will be downloaded.'

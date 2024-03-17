@@ -32,6 +32,6 @@
     <Exec Command="cd NodeLib &amp;&amp; npx rollup --config" />
   </Target>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.3" />
   </ItemGroup>
 </Project>

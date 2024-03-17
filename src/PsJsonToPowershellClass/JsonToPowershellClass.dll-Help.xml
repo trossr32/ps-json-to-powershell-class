@@ -14,11 +14,16 @@
 				<maml:para>
 					Convert JSON to Powershell classes
 				</maml:para>
+				<maml:para>
+					Also available as an online tool - https://json2ps.app
+				</maml:para>
 			</maml:description>
 		</command:details>
 		<maml:description>
 			<maml:para>
 				Convert JSON to Powershell classes.
+			</maml:para>
+			<maml:para>
 				JSON can be supplied as a string, a file that will be read or a URL that will be downloaded.
 			</maml:para>
 			<maml:para>

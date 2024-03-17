@@ -10,16 +10,18 @@ on:
 
 env:
   SOLUTION_PATH: 'src/JsonToPowershellClass.sln'
-  PROJECT_DIR: 'src/JsonToPowershellClass.Blazor'
+  PROJECT_DIR: 'src/JsonToPowershellClass.Blazor'  
+  EXCLUDE_PACKAGES: 'Microsoft.VisualStudio.Azure.Containers.Tools.Targets'
 
 jobs:
   outdated-packages-check:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: trossr32/outdated-packages-action@v1.1.0
+      - uses: trossr32/outdated-packages-action@v1.6.0
         with:
           use-dotnet-outdated: true
-          dotnet-solution-path: ${{ env.SOLUTION_PATH }}
+          dotnet-solution-or-project-path: ${{ env.SOLUTION_PATH }}
+          dotnet-exclude-packages: ${{ env.EXCLUDE_PACKAGES }}
           use-npm-outdated: true
           npm-project-directory: ${{ env.PROJECT_DIR }}

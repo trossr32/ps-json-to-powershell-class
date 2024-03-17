@@ -1,0 +1,1 @@
+clickUploadJson = () => document.getElementById('UploadJSON').click();
